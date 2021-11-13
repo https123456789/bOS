@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<style>
+			body {
+				margin: 0;
+				width: 100vw;
+				height: 100vh;
+			}
+		</style>
+	</head>
+	<body>
+		<svg version="1.1" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" id="logo">
+			<rect x="25%" y="25%" width="50%" height="50%" style="stroke: rgb(255, 255, 255); fill: rgba(0, 0, 0, 0); cursor: pointer;" id="collideBox">
+				<animate attributeName="rx" values="0%;100%;0%" dur="4s" repeatCount="indefinite"></animate>
+				<animate attributeName="stroke" values="rgba(255, 255, 255, 1);rgba(255, 255, 255, 0);rgba(255, 255, 255, 1)" dur="2s" repeatCount="indefinite"></animate>
+			</rect>
+			<text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" style="fill: rgb(0, 0, 255);">bOS</text>
+		</svg>
+		<script>
+			var svg = document.getElementById("svg");
+			window.onmessage = function(event) {
+				if (event.data.eventType == "click") {
+					var payload = event.data.data;
+					// Preform box click calculations
+					var midWidth = window.innerWidth / 2;
+					var midHeight = window.innerHeight / 2;
+					var l = midWidth - (0.5 * midWidth);
+					var r = midWidth + (0.5 * midWidth);
+					var b = midHeight - (0.5 * midHeight);
+					var t = midHeight + (0.5 * midHeight);
+					if (payload.clientX >= l && payload.clientX <= r) {
+						if (payload.clientY >= b && payload.clientY <= t) {
+							var message = {
+								eventType: "message",
+								data: {
+									senderProg: "bios",
+									status: true
+								}
+							};
+							window.parent.postMessage(message);
+						}
+					}
+				}
+			};
+		</script>
+	</body>
+</html>
