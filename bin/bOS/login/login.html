@@ -4,13 +4,76 @@
 		<title>Login</title>
 		<style>
 			body {
-				background-color: rgba(255, 255, 255, 1);
-				color: rgb(0, 0, 0);
+				background-color: rgb(255, 255, 255);
+				background-image: url("../res/core/imgs/loginBG.svg");
+				color: rgb(0, 0, 255);
+				background-attachment: fixed;
+				margin: 0%;
+			}
+			body::-webkit-scrollbar {
+				display: none;
+			}
+			#title {
+				
+			}
+			.usersList {
+				display: grid;
+				grid-template-columns: auto auto;
+				width: 100vw;
+			}
+			.userCard {
+				text-align: center;
+				border: 1px solid rgb(0, 255, 0);
+				padding: 1%;
+			}
+			.userCardImage {
+				border: 1px solid rgb(255, 0, 0);
+				border-radius: 50%;
+				width: 25vw;
+				height: 25vw;
 			}
 		</style>
 	</head>
 	<body>
-		<h1>Login</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut scelerisque magna. Donec enim leo, viverra a dolor vitae, consectetur rhoncus urna. Proin sit amet vehicula mi. Vestibulum laoreet, mi eu luctus sagittis, massa tortor vehicula orci, in sagittis mauris elit non ipsum. Duis semper posuere ligula, sed egestas diam varius in. Phasellus sodales, dolor a laoreet consequat, ex sem tempor leo, et vehicula orci sem eu dui. In id congue sapien. Nam eu mauris posuere, malesuada ante sit amet, vehicula leo. Vivamus non pulvinar nulla. Sed urna nunc, tristique a ornare vel, pellentesque non sapien. Etiam lobortis, dui at iaculis tempus, eros erat porttitor nibh, vel ultrices urna libero nec metus. Curabitur vulputate leo turpis, a imperdiet urna tempor sed. Mauris tellus eros, viverra vestibulum laoreet ut, pulvinar sed nisi. Pellentesque lobortis dui in enim ornare, eget malesuada augue tempor.</p>
+		<svg version="1.1" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" id="gradient" style="position: fixed; top: 110vh;">
+			<defs>
+				<radialGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+					<stop offset="0%" style="stop-color: rgb(255, 255, 255);"></stop>
+					<stop offset="100%" stlye="stop-color: rgb(0, 0, 0);"></stop>
+				</radialGradient>
+			</defs>
+			<rect width="100%" height="100%" fill="url(#grad1)"></rect>
+		</svg>
+		<h1 style="text-align: center;" id="title">Users</h1>
+		<div id="usersList" class="usersList">
+			<div class="userCard">
+				<img class="userCardImage" id="logo-Test-_-User-_-1">
+				<p>Test User 1</p>
+			</div>
+			<div class="userCard">
+				<img class="userCardImage">
+				<p>Test User 2</p>
+			</div>
+			<div class="userCard">
+				<img class="userCardImage">
+				<p>Root</p>
+			</div>
+		</div>
+		<script>
+			window.onmessage = function(message) {
+				var payload = message.data;
+				switch (payload.eventType) {
+					case "scroll":
+						// Scroll window
+						window.scrollBy(payload.data.deltaX, payload.data.deltaY);
+						break;
+					case "click":
+						// Handle click
+						break;
+					default:
+						break;
+				}
+			}
+		</script>
 	</body>
 </html>

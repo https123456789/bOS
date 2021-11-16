@@ -5,13 +5,15 @@ class Screen {
 	constructor(domRef, mesh) {
 		this.domRef = domRef;
 		this.domMesh = mesh;
+		this.authString = "7bu-v0gad9b238ef8293fbuj-b23788g0d2u9jph0d9edjhb80782uj2h3pubg";
 		this.click = {
 			x: null,
 			y: null
 		};
 		this.wheel = {
 			deltaY: 0,
-			scale: 0
+			scaleY: 0,
+			scaleX: 0
 		}
 	}
 	init() {
@@ -24,15 +26,17 @@ class Screen {
 			"x",
 			"y"
 		]);
-		this.scroolDriver = new Driver(this, "wheel", [
-			"deltaY"
+		this.scrollDriver = new Driver(this, "wheel", [
+			"deltaY",
+			"deltaX"
 		], [
-			"deltaY"
+			"deltaY",
+			"deltaX"
 		]);
 		// Setup mouse driver
 		this.mouseDriver.handleEvent = function(event) {
 			for (var i = 0; i < this.targetAttribs.length; i++) {
-				console.log(this.targetAttribs[i] + ": " + event[this.targetAttribs[i]]);
+				//console.log(this.targetAttribs[i] + ": " + event[this.targetAttribs[i]]);
 				this.screen[this.interfaceType][this.screenTargets[i]] = event[this.targetAttribs[i]];
 			}
 			var message = {
@@ -44,9 +48,27 @@ class Screen {
 			};
 			this.screen.domRef.contentWindow.postMessage(message);
 		}
+		// Setup wheel driver
+		this.scrollDriver.handleEvent = function(event) {
+			for (var i = 0; i < this.targetAttribs.length; i++) {
+				this.screen[this.interfaceType][this.screenTargets[i]] = event[this.targetAttribs[i]];
+			}
+			this.screen.wheel.scaleY += event.deltaY;
+			this.screen.wheel.scaleX += event.deltaX;
+			var message = {
+				eventType: "scroll",
+				data: {
+					deltaY: event.deltaY,
+					deltaX: event.deltaX,
+					scaleY: this.screen.wheel.scaleY,
+					scaleX: this.screen.wheel.scaleX
+				}
+			};
+			this.screen.domRef.contentWindow.postMessage(message);
+		}
 		// Connect drivers
 		this.mouseDriver.connect();
-		this.scroolDriver.connect();
+		this.scrollDriver.connect();
 	}
 	main() {
 		console.log("Entered main.");
@@ -60,10 +82,23 @@ class Screen {
 				if (payload.data.status) {
 					console.log("Bios runtime finished.");
 					this.domRef.src = "bin/bOS/login/login.html";
-					//console.log(this.domRef.contentDocument.body.innerHTML);
 				} else {
 					console.log("Bios runtime failed. Diagnostic: " + payload.data.errorDiag);
 				}
+			}
+		}
+		if (payload.eventType == "dataDump") {
+			console.log("Screen recived a data dump request sent from '" + payload.data.senderProg + "'.");
+			if (payload.authString == this.authString) {
+				console.log("Data dump request from '" + payload.data.senderProg + "' is authed.");
+				if (payload.data.payloadType == "array") {
+					for (var i = 0; i < payload.data.payloadKeys.length; i++) {
+						console.log("Data dump from '" + payload.data.senderProg + "' wrote data to '" + payload.data.payloadKeys[i] + "' with value '" + payload.data.payload[i] + "'. Original value was: '" + this[payload.data.payloadKeys[i]] + "'.");
+						this[payload.data.payloadKeys[i]] = payload.data.payload[i];
+					}
+				}
+			} else {
+				console.warn("Warning: a non-authed data dump request was send from '" + payload.data.senderProg + "'.");
 			}
 		}
 	}
@@ -78,8 +113,6 @@ class Driver {
 		this.interfaceType = interfaceType;
 		this.targetAttribs = targetAttribs;
 		this.screenTargets = screenTargets;
-		console.log(targetAttribs);
-		console.log(this.targetAttribs);
 		if (typeof(targetAttribs) != "object") {
 			throw "Driver Error: Invalid driver arguments: targetAttribs is not an array.";
 		}
