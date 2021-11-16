@@ -2,37 +2,7 @@
 <html>
 	<head>
 		<title>Login</title>
-		<style>
-			body {
-				background-color: rgb(255, 255, 255);
-				background-image: url("../res/core/imgs/loginBG.svg");
-				color: rgb(0, 0, 255);
-				background-attachment: fixed;
-				margin: 0%;
-			}
-			body::-webkit-scrollbar {
-				display: none;
-			}
-			#title {
-				
-			}
-			.usersList {
-				display: grid;
-				grid-template-columns: auto auto;
-				width: 100vw;
-			}
-			.userCard {
-				text-align: center;
-				border: 1px solid rgb(0, 255, 0);
-				padding: 1%;
-			}
-			.userCardImage {
-				border: 1px solid rgb(255, 0, 0);
-				border-radius: 50%;
-				width: 25vw;
-				height: 25vw;
-			}
-		</style>
+		<link rel="stylesheet" href="login.css">
 	</head>
 	<body>
 		<svg version="1.1" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" id="gradient" style="position: fixed; top: 110vh;">
@@ -44,36 +14,7 @@
 			</defs>
 			<rect width="100%" height="100%" fill="url(#grad1)"></rect>
 		</svg>
-		<h1 style="text-align: center;" id="title">Users</h1>
-		<div id="usersList" class="usersList">
-			<div class="userCard">
-				<img class="userCardImage" id="logo-Test-_-User-_-1">
-				<p>Test User 1</p>
-			</div>
-			<div class="userCard">
-				<img class="userCardImage">
-				<p>Test User 2</p>
-			</div>
-			<div class="userCard">
-				<img class="userCardImage">
-				<p>Root</p>
-			</div>
-		</div>
-		<script>
-			window.onmessage = function(message) {
-				var payload = message.data;
-				switch (payload.eventType) {
-					case "scroll":
-						// Scroll window
-						window.scrollBy(payload.data.deltaX, payload.data.deltaY);
-						break;
-					case "click":
-						// Handle click
-						break;
-					default:
-						break;
-				}
-			}
-		</script>
+		<h1 style="text-align: center;" id="title">Logging in...</h1>
+		<script src="login.js"></script>
 	</body>
 </html>
