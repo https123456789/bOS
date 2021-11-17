@@ -68,6 +68,7 @@ var stdout = document.getElementById("stdout");
 var browser;
 var platform;
 var stack = [
+	2,
 	1,
 	0
 ];
@@ -115,6 +116,40 @@ while (stack.length > 0) {
 						platform = osMap[i];
 					}
 				}
+			}, time);
+			break;
+		case 2:
+			window.setTimeout(function() {
+				stdout.innerHTML += "Configuring drivers...<br>";
+				stdout.innerHTML += "&emsp;Configuring click driver...<br>";
+				var clickDriver = new Driver(window.parent.screen, "click", [
+					"clientX",
+					"clientY"
+				], [
+					"x",
+					"y"
+				]);
+				stdout.innerHTML += "&emsp;&emsp;Created new instance of 'Driver'.<br>";
+				clickDriver.handleEvent = function(event) {
+					for (var i = 0; i < this.targetAttribs; i++) {
+						this.screen[this.interfaceType][this.screenTargets[i]] = event[this.targetAttribs[i]];
+					}
+					var message = {
+						eventType: "click",
+						data: {
+							clientX: event.clientX,
+							clientY: event.clientY
+						}
+					};
+					this.screen.domRef.contentWindow.postMessage(message);
+				}
+				stdout.innerHTML += "&emsp;&emsp;Configured click driver event handler.<br>";
+				window.parent.screen.mouseDriver = clickDriver;
+				stdout.innerHTML += "&emsp;&emsp;Wrote driver to 'window.parent.screen' which is an instance of 'Screen'.<br>";
+				window.parent.screen.mouseDriver.connect();
+				stdout.innerHTML += "&emsp;&emsp;Connected driver.<br>";
+				//stdout.innerHTML += "&emsp;Configuring scroll driver...<br>";
+				//stdout.innerHTML += "&emsp;&emsp;Created new instance of 'Driver'.<br>";
 			}, time);
 			break;
 	}

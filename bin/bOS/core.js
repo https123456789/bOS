@@ -19,13 +19,6 @@ class Screen {
 	init() {
 		bios.load();
 		bios.run(this.domRef);
-		this.mouseDriver = new Driver(this, "click", [
-			"clientX",
-			"clientY"
-		], [
-			"x",
-			"y"
-		]);
 		this.scrollDriver = new Driver(this, "wheel", [
 			"deltaY",
 			"deltaX"
@@ -33,21 +26,6 @@ class Screen {
 			"deltaY",
 			"deltaX"
 		]);
-		// Setup mouse driver
-		this.mouseDriver.handleEvent = function(event) {
-			for (var i = 0; i < this.targetAttribs.length; i++) {
-				//console.log(this.targetAttribs[i] + ": " + event[this.targetAttribs[i]]);
-				this.screen[this.interfaceType][this.screenTargets[i]] = event[this.targetAttribs[i]];
-			}
-			var message = {
-				eventType: "click",
-				data: {
-					clientX: event.clientX,
-					clientY: event.clientY
-				}
-			};
-			this.screen.domRef.contentWindow.postMessage(message);
-		}
 		// Setup wheel driver
 		this.scrollDriver.handleEvent = function(event) {
 			for (var i = 0; i < this.targetAttribs.length; i++) {
@@ -67,7 +45,6 @@ class Screen {
 			this.screen.domRef.contentWindow.postMessage(message);
 		}
 		// Connect drivers
-		this.mouseDriver.connect();
 		this.scrollDriver.connect();
 	}
 	main() {
