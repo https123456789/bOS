@@ -72,12 +72,6 @@ var stack = [
 	0
 ];
 var mswait = stack.length * 1000;
-/*
-window.setTimeout(function() {
-	while (stack[0] != 1) {}
-	stdout.innerHTML += "Detecting platform...<br>";
-}, 2000);
-*/
 while (stack.length > 0) {
 	var item = stack[0];
 	var sl = stack.length;
@@ -147,6 +141,6 @@ window.setTimeout(function() {
 	biosReady = true;
 	svg.style.display = "block";
 	window.setInterval(function() {
-		checkForCollisOnBox(window.innerWidth / 2, window.innerHeight / 2);
+		//checkForCollisOnBox(window.innerWidth / 2, window.innerHeight / 2);
 	}, 5000);
 }, mswait + 1000);

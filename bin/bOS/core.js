@@ -77,13 +77,27 @@ class Screen {
 	handleEvent(message) {
 		var payload = message.data;
 		if (payload.eventType == "message") {
-			console.log("Screen recived a message.");
+			console.log("Screen recived a message from '" + payload.data.senderProg + "'.");
 			if (payload.data.senderProg == "bios") {
-				if (payload.data.status) {
+				if (!!payload.data.status) {
 					console.log("Bios runtime finished.");
 					this.domRef.src = "bin/bOS/login/login.html";
 				} else {
-					console.log("Bios runtime failed. Diagnostic: " + payload.data.errorDiag);
+					console.error("Bios runtime failed. Diagnostic: " + payload.data.errorDiag);
+				}
+			}
+			if (payload.data.senderProg == "login") {
+				if (!!payload.data.main && !!payload.data.payloadType) {
+					if (payload.data.payloadType == "url") {
+						this.domRef.src = payload.data.main;
+					}
+				} else {
+					if (!(!!payload.data.main)) {
+						console.warn("Invalid url change request from '" + payload.data.senderProg + "': no payload main defined.");
+					}
+					if (!(!!payload.data.payloadType)) {
+						console.warn("Invalid url change request from '" + payload.data.senderProg + "': no payload type defined.");
+					}
 				}
 			}
 		}
