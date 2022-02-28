@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10">
+	<g id="source">
+		<rect x="0" y="0" width="25%" height="25%" fill="#000000"></rect>
+		<rect x="2.5" y="0" width="25%" height="25%" fill="#ffffff"></rect>
+		<rect x="5" y="0" width="25%" height="25%" fill="#000000"></rect>
+		<rect x="7.5" y="0" width="25%" height="25%" fill="#ffffff"></rect>
+	</g>
+	<g id="source2">
+		<rect x="0" y="2.5" width="25%" height="25%" fill="#ffffff"></rect>
+		<rect x="2.5" y="2.5" width="25%" height="25%" fill="#000000"></rect>
+		<rect x="5" y="2.5" width="25%" height="25%" fill="#ffffff"></rect>
+		<rect x="7.5" y="2.5" width="25%" height="25%" fill="#000000"></rect>
+	</g>
+	<use href="#source" y="5"></use>
+	<g id="source4">
+		<rect x="0" y="7.5" width="25%" height="25%" fill="#ffffff"></rect>
+		<rect x="2.5" y="7.5" width="25%" height="25%" fill="#000000"></rect>
+		<rect x="5" y="7.5" width="25%" height="25%" fill="#ffffff"></rect>
+		<rect x="7.5" y="7.5" width="25%" height="25%" fill="#000000"></rect>
+	</g>
+</svg>

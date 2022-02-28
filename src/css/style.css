@@ -1,6 +1,7 @@
 body {
 	margin: 0;
 	background-color: rgba(0, 0, 0, 1);
+	cursor: none;
 }
 #screen {
 	z-index: 100;
@@ -14,14 +15,7 @@ body {
 	bottom: 0vh;
 	border: none;
 }
-#screenMesh {
-	z-index: 101;
-	width: 100vw;
-	height: 100vh;
-	position: fixed;
-	top: 0vh;
-	left: 0vw;
-	right: 0vw;
-	bottom: 0vh;
-	background-color: rgba(200, 200, 200, 0);
+
+img, svg {
+	x-index: 1000;
 }

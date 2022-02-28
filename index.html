@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>bOS</title>
-		<link rel="stylesheet" href="style.css?rnd=1">
+		<link rel="stylesheet" href="src/css/style.css?rnd=1">
 		<script>
 			var GLOBAL = {
 				VERSION: "0.0"
@@ -10,10 +10,11 @@
 		</script>
 	</head>
 	<body>
-		<iframe id="screen" allowfullscreen></iframe>
-		<div id="screenMesh"></div>
-		<script src="bin/bOS/bios/bios.bos"></script>
-		<script src="bin/bOS/core.js"></script>
-		<script src="main.js"></script>
+		<canvas id="screen"></canvas>
+		<!-- Resources -->
+		<div id="res">
+			
+		</div>
+		<script src="src/js/main.js" type="module"></script>
 	</body>
 </html>
